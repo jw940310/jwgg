@@ -4,6 +4,7 @@ import jung.jwgg.domain.item.Item;
 import jung.jwgg.repository.item.ItemRepository;
 import jung.jwgg.repository.item.ItemSearchCond;
 import jung.jwgg.repository.item.ItemUpdateDto;
+import jung.jwgg.service.item.ItemService;
 import jung.jwgg.web.item.form.ItemSaveForm;
 import jung.jwgg.web.item.form.ItemUpdateForm;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemRepository itemRepository;
+    private final ItemService itemService;
 
     @GetMapping
     public String items(@ModelAttribute("itemSearch") ItemSearchCond itemSearch, Model model) {
         //로그인 여부 체크
-        List<Item> items = itemRepository.findAll(itemSearch);
+        List<Item> items = itemService.findItems(itemSearch);
         model.addAttribute("items", items);
         return "items/items";
     }
@@ -37,7 +38,7 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         //로그인 여부 체크
-        Item item = itemRepository.findById(itemId);
+        Item item = itemService.findById(itemId);
         model.addAttribute("item", item);
         return "items/item";
     }
@@ -71,7 +72,7 @@ public class ItemController {
         item.setPrice(form.getPrice());
         item.setQuantity(form.getQuantity());
 
-        Item savedItem = itemRepository.save(item);
+        Item savedItem = itemService.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/items/{itemId}";
@@ -79,7 +80,7 @@ public class ItemController {
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
-        Item item = itemRepository.findById(itemId);
+        Item item = itemService.findById(itemId);
         model.addAttribute("item", item);
         return "items/editForm";
     }
@@ -105,7 +106,7 @@ public class ItemController {
         itemParam.setPrice(form.getPrice());
         itemParam.setQuantity(form.getQuantity());
 
-        itemRepository.update(itemId, itemParam);
+        itemService.update(itemId, itemParam);
         return "redirect:/items/{itemId}";
     }
 
