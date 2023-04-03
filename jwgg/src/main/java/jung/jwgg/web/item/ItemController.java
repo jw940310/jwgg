@@ -2,6 +2,8 @@ package jung.jwgg.web.item;
 
 import jung.jwgg.domain.item.Item;
 import jung.jwgg.repository.item.ItemRepository;
+import jung.jwgg.repository.item.ItemSearchCond;
+import jung.jwgg.repository.item.ItemUpdateDto;
 import jung.jwgg.web.item.form.ItemSaveForm;
 import jung.jwgg.web.item.form.ItemUpdateForm;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +27,9 @@ public class ItemController {
     private final ItemRepository itemRepository;
 
     @GetMapping
-    public String items(Model model) {
+    public String items(@ModelAttribute("itemSearch") ItemSearchCond itemSearch, Model model) {
         //로그인 여부 체크
-        List<Item> items = itemRepository.findAll();
+        List<Item> items = itemRepository.findAll(itemSearch);
         model.addAttribute("items", items);
         return "items/items";
     }
@@ -98,7 +100,7 @@ public class ItemController {
             return "items/editForm";
         }
 
-        Item itemParam = new Item();
+        ItemUpdateDto itemParam = new ItemUpdateDto();
         itemParam.setItemName(form.getItemName());
         itemParam.setPrice(form.getPrice());
         itemParam.setQuantity(form.getQuantity());
