@@ -9,9 +9,9 @@ public interface ItemRepository {
 
     Item findById(Long id);
 
-    List<Item> findAll();
+    List<Item> findAll(ItemSearchCond cond);
 
-    void update(Long itemId, Item updateParam);
+    void update(Long itemId, ItemUpdateDto updateParam);
 
     void clearStore();
 }
