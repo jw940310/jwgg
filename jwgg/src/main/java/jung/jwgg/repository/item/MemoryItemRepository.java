@@ -34,7 +34,7 @@ public class MemoryItemRepository implements ItemRepository{
         Integer maxPrice = cond.getMaxPrice();
         return store.values().stream()
                 .filter(item -> {
-                    if (ObjectUtils.isEmpty(itemName)) {
+                    if (ObjectUtils.isEmpty(itemName)) { // null,"" 둘 다 true (isEmpty)
                         return true;
                     }
                     return item.getItemName().contains(itemName);
@@ -55,7 +55,6 @@ public class MemoryItemRepository implements ItemRepository{
         findItem.setQuantity(updateParam.getQuantity());
     }
 
-    @Override
     public void clearStore() {
         store.clear();
     }
