@@ -4,12 +4,14 @@ import jung.jwgg.config.MemoryConfig;
 import jung.jwgg.config.MyBatisConfig;
 import jung.jwgg.repository.item.ItemRepository;
 import jung.jwgg.repository.member.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 
+@Slf4j
 //@Import({MemoryConfig.class,WebConfig.class})
 @Import({MyBatisConfig.class,WebConfig.class})
 @SpringBootApplication(scanBasePackages = {"jung.jwgg.web","jung.jwgg.service"})
