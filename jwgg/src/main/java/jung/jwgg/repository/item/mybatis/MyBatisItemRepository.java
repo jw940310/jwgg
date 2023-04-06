@@ -5,10 +5,12 @@ import jung.jwgg.repository.item.ItemRepository;
 import jung.jwgg.repository.item.ItemSearchCond;
 import jung.jwgg.repository.item.ItemUpdateDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MyBatisItemRepository implements ItemRepository {
@@ -17,6 +19,7 @@ public class MyBatisItemRepository implements ItemRepository {
 
     @Override
     public Item save(Item item) {
+        log.info("itemMapper class={}", itemMapper.getClass());
         itemMapper.save(item);
         return item;
     }

@@ -23,15 +23,15 @@ public class TestDataInit {
 //    @PostConstruct
     @EventListener(ApplicationReadyEvent.class) // AOP를 포함한 스프링 컨테이너가 완전히 초기화 된 이후에 호출되기 때문에 문제 발생X
     public void init() {
-        itemRepository.save(new Item("itemA", 10000, 10));
-        itemRepository.save(new Item("itemB", 20000, 20));
-
-        Member member = new Member();
-        member.setLoginId("test");
-        member.setPassword("test!");
-        member.setName("테스터");
-
-        memberRepository.save(member);
+//        itemRepository.save(new Item("itemA", 10000, 10));
+//        itemRepository.save(new Item("itemB", 20000, 20));
+//
+//        Member member = new Member();
+//        member.setLoginId("test");
+//        member.setPassword("test!");
+//        member.setName("테스터");
+//
+//        memberRepository.save(member);
 
     }
 }
