@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.champs}">추천 챔피언 목록</h2>
+    </div>
+
+    <form th:object="${champ}" method="get" class="form-inline">
+        <div class="row">
+            <div class="col">
+                <input type="text" th:field="*{champName}" class="form-control" placeholder="카운터 챔피언"/>
+            </div>
+            <div class="col">
+                <input type="text" th:field="*{champLine}" class="form-control" placeholder="역할군"/>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-secondary mb-2">검색</button>
+            </div>
+        </div>
+    </form>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{label.champ.champName}">추천 챔피언</th>
+                <th th:text="#{label.champ.champLine}">역할군</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="champ : ${champs}">
+                <td th:text="${champ.champName}">베인</td>
+                <td th:text="${champ.champLine}">원딜</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

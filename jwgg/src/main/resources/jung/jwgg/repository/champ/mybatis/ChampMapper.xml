@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jung.jwgg.repository.champ.mybatis.ChampMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="champId">
+        insert into CHAMP (champ_name,champ_line)
+        values (#{champName}, #{champLine})
+    </insert>
+
+    <select id="recommendChamp" resultType="Champ">
+        SELECT champ_id, champ_name,champ_line
+        FROM CHAMP
+        left join counter on champ.champ_id = counter.id
+        <where>
+            <if test="champName != null and champName !=''">
+                and (counter.cid is null or counter.cid!=#{champId}) and champ.champ_name!=#{champName}
+            </if>
+            <if test="champLine != null and champLine !=''">
+                and champ.champ_line = #{champLine}
+            </if>
+        </where>
+    </select>
+
+    <select id="findChamp" resultType="Champ">
+        SELECT champ_id, champ_name,champ_line
+        FROM CHAMP
+        where champ_name=#{champName}
+    </select>
+
+</mapper>
