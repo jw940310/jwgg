@@ -12,16 +12,46 @@
         <h2 th:text="#{page.champs}">추천 챔피언 목록</h2>
     </div>
 
-    <form th:object="${champ}" method="get" class="form-inline">
+    <form th:object="${cond}" method="get" class="form-inline">
         <div class="row">
             <div class="col">
-                <input type="text" th:field="*{champName}" class="form-control" placeholder="카운터 챔피언"/>
+                <input type="text" th:field="*{redChampName1}" class="form-control" placeholder="적군 1"/>
             </div>
             <div class="col">
-                <input type="text" th:field="*{champLine}" class="form-control" placeholder="역할군"/>
+                <input type="text" th:field="*{redChampName2}" class="form-control" placeholder="적군 2"/>
             </div>
             <div class="col">
-                <button type="submit" class="btn btn-secondary mb-2">검색</button>
+                <input type="text" th:field="*{redChampName3}" class="form-control" placeholder="적군 3"/>
+            </div>
+            <div class="col">
+                <input type="text" th:field="*{redChampName4}" class="form-control" placeholder="적군 4"/>
+            </div>
+            <div class="col">
+                <input type="text" th:field="*{redChampName5}" class="form-control" placeholder="적군 5"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" th:field="*{blueChampName1}" class="form-control" placeholder="아군 1"/>
+            </div>
+            <div class="col">
+                <input type="text" th:field="*{blueChampName2}" class="form-control" placeholder="아군 2"/>
+            </div>
+            <div class="col">
+                <input type="text" th:field="*{blueChampName3}" class="form-control" placeholder="아군 3"/>
+            </div>
+            <div class="col">
+                <input type="text" th:field="*{blueChampName4}" class="form-control" placeholder="아군 4"/>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" th:field="*{champLine}" class="form-control" placeholder="내 포지션"/>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-secondary mb-2 float-end">검색</button>
             </div>
         </div>
     </form>

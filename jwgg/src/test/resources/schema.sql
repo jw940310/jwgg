@@ -42,3 +42,4 @@ insert into champ (champ_name, champ_line) values ('카이사','원딜'); --3
 insert into champ (champ_name, champ_line) values ('루시안','원딜'); --4
 
 insert into counter (id, cid) values (1,3);
+insert into counter (id, cid) values (2,4);

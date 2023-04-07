@@ -1,6 +1,7 @@
 package jung.jwgg.repository.champ.mybatis;
 
 import jung.jwgg.domain.champ.Champ;
+import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.repository.champ.ChampRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -14,8 +15,8 @@ public class MyBatisChampRepository implements ChampRepository {
     private final ChampMapper champMapper;
 
     @Override
-    public List<Champ> recommendChamp(Champ champ) {
-        return champMapper.recommendChamp(champ);
+    public List<Champ> recommendChamp(ChampRecoCond cond) {
+        return champMapper.recommendChamp(cond);
     }
 
     @Override

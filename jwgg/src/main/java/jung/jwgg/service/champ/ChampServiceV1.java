@@ -1,6 +1,7 @@
 package jung.jwgg.service.champ;
 
 import jung.jwgg.domain.champ.Champ;
+import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.repository.champ.ChampRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ public class ChampServiceV1 implements ChampService{
     private final ChampRepository champRepository;
 
     @Override
-    public List<Champ> recommendChamp(Champ champ) {
-        return champRepository.recommendChamp(champ);
+    public List<Champ> recommendChamp(ChampRecoCond cond) {
+        return champRepository.recommendChamp(cond);
     }
 
     @Override

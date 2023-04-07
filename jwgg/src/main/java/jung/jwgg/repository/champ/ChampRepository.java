@@ -5,7 +5,7 @@ import jung.jwgg.domain.champ.Champ;
 import java.util.List;
 
 public interface ChampRepository {
-    List<Champ> recommendChamp(Champ champ);
+    List<Champ> recommendChamp(ChampRecoCond cond);
 
     Champ findChamp(String champName);
 
