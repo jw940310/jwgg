@@ -113,7 +113,7 @@ public class TestDataInit {
         addChamp("쉬바나", "탑");
         addChamp("스웨인", "탑");
         addChamp("스카너", "탑");
-        addChamp("시비르", "탑");
+        addChamp("시비르", "원딜");
         addChamp("신짜오", "탑");
         addChamp("신드라", "탑");
         addChamp("신지드", "탑");

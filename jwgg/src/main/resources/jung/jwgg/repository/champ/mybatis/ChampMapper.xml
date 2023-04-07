@@ -7,9 +7,20 @@
         insert into CHAMP (champ_name,champ_line)
         values (#{champName}, #{champLine})
     </insert>
+    <insert id="counterSave">
+        insert into counter (id, cid)
+        values (#{id}, #{cid});
+    </insert>
 
+    <select id="dedupe" resultType="Int">
+        SELECT COUNT(*)
+        FROM counter
+        WHERE id = #{id} AND cid = #{cid}
+    </select>
+
+<!--
     <select id="recommendChamp" resultType="Champ">
-        SELECT champ_id, champ_name,champ_line
+        SELECT distinct champ_id, champ_name,champ_line
         FROM CHAMP
         left join counter on champ.champ_id = counter.id
         <where>
@@ -33,6 +44,34 @@
             </if>
         </where>
     </select>
+-->
+
+    <select id="recommendChamp" resultType="Champ">
+        SELECT distinct champ_id, champ_name,champ_line
+        FROM CHAMP
+        <where>
+            <if test="redChampName1 != null and redChampName1 !=''">
+                and champ_id not in (select id from counter where cid=#{redChampId1}) and champ.champ_name!=#{redChampName1}
+            </if>
+            <if test="redChampName2 != null and redChampName2 !=''">
+                and champ_id not in (select id from counter where cid=#{redChampId2}) and champ.champ_name!=#{redChampName2}
+            </if>
+            <if test="redChampName3 != null and redChampName3 !=''">
+                and champ_id not in (select id from counter where cid=#{redChampId3}) and champ.champ_name!=#{redChampName3}
+            </if>
+            <if test="redChampName4 != null and redChampName4 !=''">
+                and champ_id not in (select id from counter where cid=#{redChampId4}) and champ.champ_name!=#{redChampName4}
+            </if>
+            <if test="redChampName5 != null and redChampName5 !=''">
+                and champ_id not in (select id from counter where cid=#{redChampId5}) and champ.champ_name!=#{redChampName5}
+            </if>
+            <if test="champLine != null and champLine !=''">
+                and champ.champ_line = #{champLine}
+            </if>
+        </where>
+    </select>
+
+
 
 <!--
     <select id="recommendChamp" resultType="Champ">

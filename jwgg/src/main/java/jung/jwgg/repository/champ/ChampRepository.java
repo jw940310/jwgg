@@ -11,4 +11,7 @@ public interface ChampRepository {
 
     Champ save(Champ champ);
 
+    void counterSave(Integer id, Integer cid);
+
+    int dedupe(Integer id, Integer cid);
 }

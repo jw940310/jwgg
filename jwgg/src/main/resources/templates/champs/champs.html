@@ -46,11 +46,19 @@
             <div class="col">
             </div>
         </div>
+        <hr class="my-2">
         <div class="row">
             <div class="col">
-                <input type="text" th:field="*{champLine}" class="form-control" placeholder="내 포지션"/>
+                <button class="btn btn-primary"
+                        onclick="location.href='addCounter.html'"
+                        th:onclick="|location.href='@{/champs/add}'|"
+                        type="button">카운터 등록
+                </button>
             </div>
+            <div class="col"></div>
+            <div class="col"></div>
             <div class="col">
+                <input type="text" th:field="*{champLine}" class="form-control float-end" placeholder="내 포지션"/>
                 <button type="submit" class="btn btn-secondary mb-2 float-end">검색</button>
             </div>
         </div>

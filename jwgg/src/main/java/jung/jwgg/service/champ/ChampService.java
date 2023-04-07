@@ -12,4 +12,8 @@ public interface ChampService {
 
     Champ findChamp(String champName);
 
+    void counterSave(Integer id, Integer cid);
+
+    int dedupe(Integer id, Integer cid);
+
 }

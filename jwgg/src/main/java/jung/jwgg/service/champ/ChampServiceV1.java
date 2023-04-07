@@ -28,4 +28,14 @@ public class ChampServiceV1 implements ChampService{
     public Champ findChamp(String champName) {
         return champRepository.findChamp(champName);
     }
+
+    @Override
+    public void counterSave(Integer id, Integer cid) {
+        champRepository.counterSave(id,cid);
+    }
+
+    @Override
+    public int dedupe(Integer id, Integer cid) {
+        return champRepository.dedupe(id,cid);
+    }
 }

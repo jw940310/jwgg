@@ -29,4 +29,14 @@ public class MyBatisChampRepository implements ChampRepository {
         champMapper.save(champ);
         return champ;
     }
+
+    @Override
+    public void counterSave(Integer id, Integer cid) {
+        champMapper.counterSave(id,cid);
+    }
+
+    @Override
+    public int dedupe(Integer id, Integer cid) {
+        return champMapper.dedupe(id,cid);
+    }
 }
