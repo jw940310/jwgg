@@ -19,10 +19,12 @@ class ChampRepositoryTest {
 
     @Test
     void recommendChamp() {
-        Champ newChamp = new Champ("르블랑","미드");
+        Champ newChamp = new Champ("르블랑","미드"); // 5
         champRepository.save(newChamp);
-        Champ counterChamp = new Champ("카이사", "원딜");
-        List<Champ> champs = champRepository.recommendChamp(counterChamp);
+        ChampRecoCond cond = new ChampRecoCond();
+        cond.setRedChampName1("카이사");
+        cond.setChampLine("원딜");
+        List<Champ> champs = champRepository.recommendChamp(cond);
         Assertions.assertThat(champs.size()).isEqualTo(2);
     }
 

@@ -13,14 +13,42 @@
         FROM CHAMP
         left join counter on champ.champ_id = counter.id
         <where>
-            <if test="champName != null and champName !=''">
-                and (counter.cid is null or counter.cid!=#{champId}) and champ.champ_name!=#{champName}
+            <if test="redChampName1 != null and redChampName1 !=''">
+                and (counter.cid is null or counter.cid!=#{redChampId1}) and champ.champ_name!=#{redChampName1}
+            </if>
+            <if test="redChampName2 != null and redChampName2 !=''">
+                and (counter.cid is null or counter.cid!=#{redChampId2}) and champ.champ_name!=#{redChampName2}
+            </if>
+            <if test="redChampName3 != null and redChampName3 !=''">
+                and (counter.cid is null or counter.cid!=#{redChampId3}) and champ.champ_name!=#{redChampName3}
+            </if>
+            <if test="redChampName4 != null and redChampName4 !=''">
+                and (counter.cid is null or counter.cid!=#{redChampId4}) and champ.champ_name!=#{redChampName4}
+            </if>
+            <if test="redChampName5 != null and redChampName5 !=''">
+                and (counter.cid is null or counter.cid!=#{redChampId5}) and champ.champ_name!=#{redChampName5}
             </if>
             <if test="champLine != null and champLine !=''">
                 and champ.champ_line = #{champLine}
             </if>
         </where>
     </select>
+
+<!--
+    <select id="recommendChamp" resultType="Champ">
+        SELECT champ_id, champ_name,champ_line
+        FROM CHAMP
+        left join counter on champ.champ_id = counter.id
+        <where>
+            <foreach item="id" index="index" collection="redTeam" open="and (" separator="," close=")">
+                (counter.cid is null or counter.cid!=#{id}) and champ.champ_id!=#{id}
+            </foreach>
+            <if test="champLine != null and champLine !=''">
+                and champ.champ_line = #{champLine}
+            </if>
+        </where>
+    </select>
+-->
 
     <select id="findChamp" resultType="Champ">
         SELECT champ_id, champ_name,champ_line
