@@ -35,6 +35,7 @@ CREATE TABLE counter (
   FOREIGN KEY (cid) REFERENCES champ(champ_id)
 );
 
+--ALTER TABLE champ ALTER COLUMN champ_id RESTART WITH 1;
 
 insert into champ (champ_name, champ_line) values ('베인','원딜'); --1
 insert into champ (champ_name, champ_line) values ('시비르','원딜'); --2

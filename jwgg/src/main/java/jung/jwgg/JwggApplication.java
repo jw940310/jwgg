@@ -2,6 +2,7 @@ package jung.jwgg;
 
 import jung.jwgg.config.MemoryConfig;
 import jung.jwgg.config.MyBatisConfig;
+import jung.jwgg.repository.champ.ChampRepository;
 import jung.jwgg.repository.item.ItemRepository;
 import jung.jwgg.repository.member.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class JwggApplication {
 
 	@Bean
 	@Profile("local")
-	public TestDataInit testDataInit(ItemRepository itemRepository, MemberRepository memberRepository) {
-		return new TestDataInit(itemRepository,memberRepository);
+	public TestDataInit testDataInit(ItemRepository itemRepository, MemberRepository memberRepository, ChampRepository champRepository) {
+		return new TestDataInit(itemRepository,memberRepository,champRepository);
 	}
 }
