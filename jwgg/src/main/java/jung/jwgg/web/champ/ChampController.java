@@ -1,5 +1,6 @@
 package jung.jwgg.web.champ;
 
+import jung.jwgg.domain.champ.AddCounterFormV2;
 import jung.jwgg.domain.champ.Champ;
 import jung.jwgg.domain.item.Item;
 import jung.jwgg.domain.member.Member;
@@ -8,16 +9,14 @@ import jung.jwgg.service.champ.ChampService;
 import jung.jwgg.web.SessionConst;
 import jung.jwgg.web.champ.form.AddCounterDto;
 import jung.jwgg.web.champ.form.AddCounterForm;
+import jung.jwgg.web.champ.form.SearchCountDto;
 import jung.jwgg.web.item.form.ItemSaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,14 +76,26 @@ public class ChampController {
     }
 
     @GetMapping("/add")
-    public String addForm(Model model) {
+    public String addForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER,required = false)Member loginMember, @ModelAttribute("champ") AddCounterFormV2 form, Model model) {
         //로그인 여부 체크
-        model.addAttribute("champ", new AddCounterForm());
+        model.addAttribute("champ2", new Champ());
+
+        SearchCountDto searchCount = new SearchCountDto(loginMember.getId(), form.getSearchChamp());
+        List<AddCounterFormV2> champs = champService.countedChamp(searchCount);
+        model.addAttribute("champs", champs);
+
         return "champs/addCounter";
     }
 
     @PostMapping("/add")
-    public String addCounter(@Valid @ModelAttribute("champ") AddCounterForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String addCounter(@SessionAttribute(name = SessionConst.LOGIN_MEMBER,required = false)Member loginMember,
+                             @Valid @ModelAttribute("champ") AddCounterForm form, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes, Model model) {
+
+        SearchCountDto searchCount = new SearchCountDto(loginMember.getId(), form.getSearchChamp());
+        List<AddCounterFormV2> champs = champService.countedChamp(searchCount);
+        model.addAttribute("champs", champs);
+
 
         //특정 필드 예외가 아닌 전체 예외
         if (form.getRegisterChampName() != null && form.getCounter() != null) {
@@ -100,10 +111,7 @@ public class ChampController {
 
         Integer id = champService.findChamp(form.getRegisterChampName()).getChampId();
         Integer cid = champService.findChamp(form.getCounter()).getChampId();
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Long loginId = member.getId();
-        AddCounterDto addCounterDto = new AddCounterDto(loginId, id, cid);
+        AddCounterDto addCounterDto = new AddCounterDto(loginMember.getId(), id, cid);
 
         if (champService.dedupe(addCounterDto) > 0) {
             bindingResult.reject("dedupe");
@@ -114,13 +122,15 @@ public class ChampController {
             return "champs/addCounter";
         }
 
-
-
         //성공 로직
 
         log.info("{},{}",id,cid);
 
         champService.counterSave(addCounterDto);
+
+        SearchCountDto searchCount2 = new SearchCountDto(loginMember.getId(), form.getSearchChamp());
+        List<AddCounterFormV2> champs2 = champService.countedChamp(searchCount2);
+        model.addAttribute("champs", champs2);
 
         return "champs/addCounter";
     }
