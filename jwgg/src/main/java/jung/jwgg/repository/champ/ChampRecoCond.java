@@ -9,6 +9,8 @@ import java.util.List;
 public class ChampRecoCond {
     private List<Integer> redTeam;
 
+    private Long loginId;
+
     private Integer redChampId1;
     private String redChampName1;
     private Integer redChampId2;

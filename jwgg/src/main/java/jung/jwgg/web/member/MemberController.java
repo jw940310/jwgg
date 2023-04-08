@@ -26,6 +26,19 @@ public class MemberController {
 
     @PostMapping("/add")
     public String save(@Valid @ModelAttribute Member member, BindingResult bindingResult) {
+
+        if (memberRepository.findByLoginId(member.getLoginId()).isPresent()) {
+            bindingResult.reject("loginIdExist","이미 존재하는 아이디 입니다.");
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "members/addMemberForm";
+        }
+
+        if (memberRepository.findByName(member.getName()).isPresent()) {
+            bindingResult.reject("loginNameExist","이미 존재하는 이름 입니다.");
+        }
+
         if (bindingResult.hasErrors()) {
             return "members/addMemberForm";
         }

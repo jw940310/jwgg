@@ -3,6 +3,7 @@ package jung.jwgg.repository.champ.mybatis;
 import jung.jwgg.domain.champ.Champ;
 import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.repository.champ.ChampRepository;
+import jung.jwgg.web.champ.form.AddCounterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -31,12 +32,12 @@ public class MyBatisChampRepository implements ChampRepository {
     }
 
     @Override
-    public void counterSave(Integer id, Integer cid) {
-        champMapper.counterSave(id,cid);
+    public void counterSave(AddCounterDto addCounterDto) {
+        champMapper.counterSave(addCounterDto);
     }
 
     @Override
-    public int dedupe(Integer id, Integer cid) {
-        return champMapper.dedupe(id,cid);
+    public int dedupe(AddCounterDto addCounterDto) {
+        return champMapper.dedupe(addCounterDto);
     }
 }
