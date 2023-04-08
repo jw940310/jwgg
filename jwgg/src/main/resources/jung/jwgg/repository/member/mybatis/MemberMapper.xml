@@ -14,6 +14,12 @@
         where id=#{id}
     </select>
 
+    <select id="findByName" resultType="Member">
+        select id, login_id, name, password
+        from member
+        where login_id=#{name}
+    </select>
+
     <select id="findAll" resultType="Member">
         select id, login_id, name, password
         from member

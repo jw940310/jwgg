@@ -2,8 +2,11 @@ package jung.jwgg.web.champ;
 
 import jung.jwgg.domain.champ.Champ;
 import jung.jwgg.domain.item.Item;
+import jung.jwgg.domain.member.Member;
 import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.service.champ.ChampService;
+import jung.jwgg.web.SessionConst;
+import jung.jwgg.web.champ.form.AddCounterDto;
 import jung.jwgg.web.champ.form.AddCounterForm;
 import jung.jwgg.web.item.form.ItemSaveForm;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ public class ChampController {
     private final ChampService champService;
 
     @GetMapping
-    public String champs(@ModelAttribute("cond") ChampRecoCond cond, Model model) {
+    public String champs(@ModelAttribute("cond") ChampRecoCond cond, Model model, HttpServletRequest request) {
 /*        for (String redName : cond.getRedNames()) {
             if (redName != null && !redName.isEmpty()) {
                 Champ findChamp = champService.findChamp(redName);
@@ -38,6 +43,11 @@ public class ChampController {
             }
         }
         log.info("complete,{}",cond.getRedTeam());*/
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long id = member.getId();
+        cond.setLoginId(id);
 
         if (cond.getRedChampName1() != null && !cond.getRedChampName1().isEmpty()) {
             Champ findedChamp = champService.findChamp(cond.getRedChampName1());
@@ -74,7 +84,7 @@ public class ChampController {
     }
 
     @PostMapping("/add")
-    public String addCounter(@Valid @ModelAttribute("champ") AddCounterForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addCounter(@Valid @ModelAttribute("champ") AddCounterForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         //특정 필드 예외가 아닌 전체 예외
         if (form.getRegisterChampName() != null && form.getCounter() != null) {
@@ -83,14 +93,19 @@ public class ChampController {
             }
         }
 
-
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "champs/addCounter";
         }
+
         Integer id = champService.findChamp(form.getRegisterChampName()).getChampId();
         Integer cid = champService.findChamp(form.getCounter()).getChampId();
-        if (champService.dedupe(id, cid) > 0) {
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long loginId = member.getId();
+        AddCounterDto addCounterDto = new AddCounterDto(loginId, id, cid);
+
+        if (champService.dedupe(addCounterDto) > 0) {
             bindingResult.reject("dedupe");
         }
 
@@ -100,11 +115,12 @@ public class ChampController {
         }
 
 
+
         //성공 로직
 
         log.info("{},{}",id,cid);
 
-        champService.counterSave(id,cid);
+        champService.counterSave(addCounterDto);
 
         return "champs/addCounter";
     }

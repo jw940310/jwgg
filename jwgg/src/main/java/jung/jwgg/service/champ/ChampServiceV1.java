@@ -3,6 +3,7 @@ package jung.jwgg.service.champ;
 import jung.jwgg.domain.champ.Champ;
 import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.repository.champ.ChampRepository;
+import jung.jwgg.web.champ.form.AddCounterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +31,12 @@ public class ChampServiceV1 implements ChampService{
     }
 
     @Override
-    public void counterSave(Integer id, Integer cid) {
-        champRepository.counterSave(id,cid);
+    public void counterSave(AddCounterDto addCounterDto) {
+        champRepository.counterSave(addCounterDto);
     }
 
     @Override
-    public int dedupe(Integer id, Integer cid) {
-        return champRepository.dedupe(id,cid);
+    public int dedupe(AddCounterDto addCounterDto) {
+        return champRepository.dedupe(addCounterDto);
     }
 }

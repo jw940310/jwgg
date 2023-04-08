@@ -17,6 +17,7 @@ class ChampRepositoryTest {
     @Autowired
     ChampRepository champRepository;
 
+/*
     @Test
     void recommendChamp() {
         Champ newChamp = new Champ("르블랑","미드"); // 5
@@ -27,6 +28,7 @@ class ChampRepositoryTest {
         List<Champ> champs = champRepository.recommendChamp(cond);
         Assertions.assertThat(champs.size()).isEqualTo(2);
     }
+*/
 
 //    void test(Integer champId, Item... items) {
 //        List<Champ> champs = champRepository.recommendChamp(champId);

@@ -1,6 +1,7 @@
 package jung.jwgg.repository.champ;
 
 import jung.jwgg.domain.champ.Champ;
+import jung.jwgg.web.champ.form.AddCounterDto;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface ChampRepository {
 
     Champ save(Champ champ);
 
-    void counterSave(Integer id, Integer cid);
+    void counterSave(AddCounterDto addCounterDto);
 
-    int dedupe(Integer id, Integer cid);
+    int dedupe(AddCounterDto addCounterDto);
 }

@@ -32,7 +32,7 @@ public class MyBatisMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByName(String name) {
-        return Optional.empty();
+        return memberMapper.findByName(name);
     }
 
     @Override
