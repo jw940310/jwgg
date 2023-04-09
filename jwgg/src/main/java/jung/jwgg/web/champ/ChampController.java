@@ -136,8 +136,8 @@ public class ChampController {
     }
     @PostMapping("/delete/{registerChampName}/{counter}/{searchChamp}")
     public String deleteChamp(@SessionAttribute(name = SessionConst.LOGIN_MEMBER,required = false)Member loginMember,
-                              @PathVariable("registerChampName") String registerChampName, @PathVariable("counter") String counter,
-                              @PathVariable("searchChamp") String searchChamp,
+                              @PathVariable(required = false) String registerChampName, @PathVariable(required = false) String counter,
+                              @PathVariable(required = false) String searchChamp,
                               RedirectAttributes redirectAttributes) {
         Integer id = champService.findChamp(registerChampName).getChampId();
         Integer cid = champService.findChamp(counter).getChampId();
@@ -146,7 +146,21 @@ public class ChampController {
 
         champService.deleteCounter(addCounterDto);
 
-        redirectAttributes.addAttribute("searchChamp", searchChamp);
+        if (searchChamp != null) {
+            redirectAttributes.addAttribute("searchChamp", searchChamp);
+        }
+
+        return "redirect:/champs/add";
+    }
+    @PostMapping("/delete/{registerChampName}/{counter}/")
+    public String deleteChamp2(@SessionAttribute(name = SessionConst.LOGIN_MEMBER,required = false)Member loginMember,
+                              @PathVariable(required = false) String registerChampName, @PathVariable(required = false) String counter) {
+        Integer id = champService.findChamp(registerChampName).getChampId();
+        Integer cid = champService.findChamp(counter).getChampId();
+
+        AddCounterDto addCounterDto = new AddCounterDto(loginMember.getId(), id, cid);
+
+        champService.deleteCounter(addCounterDto);
 
         return "redirect:/champs/add";
     }
