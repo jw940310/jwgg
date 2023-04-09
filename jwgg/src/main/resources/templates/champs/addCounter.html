@@ -78,10 +78,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="champ : ${champs}">
-                <td th:text="${champ.registerChampName}"></td>
-                <td th:text="${champ.counter}"></td>
-
+            <tr th:each="cham : ${champs}">
+                <td th:text="${cham.registerChampName}"></td>
+                <td th:text="${cham.counter}"></td>
+                <td>
+                    <form th:action="@{/champs/delete/{registerChampName}/{counter}/{searchChamp}(registerChampName=${cham.registerChampName}, counter=${cham.counter},searchChamp=${champ.searchChamp})}" method="post">
+                        <input type="submit" value="삭제">
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

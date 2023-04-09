@@ -21,4 +21,5 @@ public interface ChampRepository {
 
     List<AddCounterFormV2> countedChamp(SearchCountDto searchCount);
 
+    void deleteCounter(AddCounterDto addCounterDto);
 }

@@ -12,6 +12,10 @@
         values (#{loginId},#{id}, #{cid});
     </insert>
 
+    <delete id="deleteCounter">
+        delete from counter
+        WHERE id = #{id} AND cid = #{cid} AND LOGIN_ID = #{loginId}
+    </delete>
     <select id="dedupe" resultType="Int">
         SELECT COUNT(*)
         FROM counter

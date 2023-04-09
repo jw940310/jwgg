@@ -25,4 +25,5 @@ public interface ChampMapper {
 
     List<AddCounterFormV2> countedChamp(SearchCountDto searchCount);
 
+    void deleteCounter(AddCounterDto addCounterDto);
 }

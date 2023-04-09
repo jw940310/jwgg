@@ -48,4 +48,9 @@ public class MyBatisChampRepository implements ChampRepository {
     public List<AddCounterFormV2> countedChamp(SearchCountDto searchCount) {
         return champMapper.countedChamp(searchCount);
     }
+
+    @Override
+    public void deleteCounter(AddCounterDto addCounterDto) {
+        champMapper.deleteCounter(addCounterDto);
+    }
 }

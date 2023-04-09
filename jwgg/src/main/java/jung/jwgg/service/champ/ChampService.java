@@ -21,4 +21,6 @@ public interface ChampService {
     int dedupe(AddCounterDto addCounterDto);
 
     List<AddCounterFormV2> countedChamp(SearchCountDto searchCount);
+
+    void deleteCounter(AddCounterDto addCounterDto);
 }
