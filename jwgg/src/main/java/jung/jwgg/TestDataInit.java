@@ -25,7 +25,7 @@ public class TestDataInit {
     */
 
 //    @PostConstruct
-    @EventListener(ApplicationReadyEvent.class) // AOP를 포함한 스프링 컨테이너가 완전히 초기화 된 이후에 호출되기 때문에 문제 발생X
+//    @EventListener(ApplicationReadyEvent.class) // AOP를 포함한 스프링 컨테이너가 완전히 초기화 된 이후에 호출되기 때문에 문제 발생X
     public void init() {
 
 //        itemRepository.save(new Item("itemA", 10000, 10));
