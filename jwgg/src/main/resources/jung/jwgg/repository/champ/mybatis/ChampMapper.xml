@@ -12,12 +12,29 @@
         values (#{loginId},#{id}, #{cid});
     </insert>
 
+    <delete id="deleteCounter">
+        delete from counter
+        WHERE id = #{id} AND cid = #{cid} AND LOGIN_ID = #{loginId}
+    </delete>
     <select id="dedupe" resultType="Int">
         SELECT COUNT(*)
         FROM counter
         WHERE id = #{id} AND cid = #{cid} AND LOGIN_ID = #{loginId}
     </select>
-    
+
+    <select id="countedChamp" resultType="AddCounterFormV2">
+        SELECT B.CHAMP_NAME AS "registerChampName",C.CHAMP_NAME AS "counter"
+        FROM counter A
+        left join champ B on B.champ_id = A.id
+        left join champ C on A.cid = c.champ_id
+        <where>
+            A.LOGIN_ID = #{loginId}
+            <if test="SearchWord != null and SearchWord !=''">
+                and B.CHAMP_NAME like concat('%', #{SearchWord},'%')
+            </if>
+        </where>
+    </select>
+
     <select id="recommendChamp" resultType="Champ">
         SELECT distinct champ_id, champ_name,champ_line
         FROM CHAMP

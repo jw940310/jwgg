@@ -1,9 +1,12 @@
 package jung.jwgg.service.champ;
 
+import jung.jwgg.domain.champ.AddCounterFormV2;
 import jung.jwgg.domain.champ.Champ;
 import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.repository.champ.ChampRepository;
 import jung.jwgg.web.champ.form.AddCounterDto;
+import jung.jwgg.web.champ.form.AddCounterForm;
+import jung.jwgg.web.champ.form.SearchCountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +41,14 @@ public class ChampServiceV1 implements ChampService{
     @Override
     public int dedupe(AddCounterDto addCounterDto) {
         return champRepository.dedupe(addCounterDto);
+    }
+
+    @Override
+    public List<AddCounterFormV2> countedChamp(SearchCountDto searchCount) {
+        return champRepository.countedChamp(searchCount);
+    }
+    @Override
+    public void deleteCounter(AddCounterDto addCounterDto) {
+        champRepository.deleteCounter(addCounterDto);
     }
 }

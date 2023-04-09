@@ -1,14 +1,12 @@
-package jung.jwgg.web.champ.form;
+package jung.jwgg.domain.champ;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class AddCounterForm {
-    @NotBlank
+public class AddCounterFormV2 {
     private String registerChampName;
-    @NotBlank
     private String counter;
     private String searchChamp;
 }

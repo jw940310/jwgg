@@ -1,9 +1,12 @@
 package jung.jwgg.repository.champ.mybatis;
 
+import jung.jwgg.domain.champ.AddCounterFormV2;
 import jung.jwgg.domain.champ.Champ;
 import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.repository.champ.ChampRepository;
 import jung.jwgg.web.champ.form.AddCounterDto;
+import jung.jwgg.web.champ.form.AddCounterForm;
+import jung.jwgg.web.champ.form.SearchCountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -39,5 +42,15 @@ public class MyBatisChampRepository implements ChampRepository {
     @Override
     public int dedupe(AddCounterDto addCounterDto) {
         return champMapper.dedupe(addCounterDto);
+    }
+
+    @Override
+    public List<AddCounterFormV2> countedChamp(SearchCountDto searchCount) {
+        return champMapper.countedChamp(searchCount);
+    }
+
+    @Override
+    public void deleteCounter(AddCounterDto addCounterDto) {
+        champMapper.deleteCounter(addCounterDto);
     }
 }
