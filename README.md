@@ -17,6 +17,7 @@ Spring Boot
 * Thymeleaf
 * H2 Database
 * Lombok
+* MyBatis
 
 그 외
 
