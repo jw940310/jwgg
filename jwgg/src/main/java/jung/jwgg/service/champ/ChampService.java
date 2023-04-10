@@ -4,9 +4,9 @@ import jung.jwgg.domain.champ.AddCounterFormV2;
 import jung.jwgg.domain.champ.Champ;
 import jung.jwgg.repository.champ.ChampRecoCond;
 import jung.jwgg.web.champ.form.AddCounterDto;
-import jung.jwgg.web.champ.form.AddCounterForm;
 import jung.jwgg.web.champ.form.SearchCountDto;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ChampService {
@@ -23,4 +23,6 @@ public interface ChampService {
     List<AddCounterFormV2> countedChamp(SearchCountDto searchCount);
 
     void deleteCounter(AddCounterDto addCounterDto);
+
+    String scrapeHeadToHeadWinRate(String championName1, String championName2) throws IOException;
 }
