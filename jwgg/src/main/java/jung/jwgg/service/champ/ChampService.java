@@ -24,5 +24,5 @@ public interface ChampService {
 
     void deleteCounter(AddCounterDto addCounterDto);
 
-    String scrapeHeadToHeadWinRate(String championName1, String championName2) throws IOException;
+    String scrapeHeadToHeadWinRate(String championName1, String championName2, String championLine) throws IOException;
 }

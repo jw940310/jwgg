@@ -4,6 +4,15 @@
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,6 +24,10 @@
     </div>
 
     <form th:object="${cond}" method="get" class="form-inline">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:text="${#fields.globalErrors().get(0)}">글로벌 오류 메시지</p>
+        </div>
+
         <div class="row">
             <div class="col">
                 <input type="text" th:field="*{redChampName1}" class="form-control" placeholder="적군 1"/>
@@ -48,6 +61,38 @@
             <div class="col">
             </div>
         </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td th:text="${cond.winRate1}" width="20%"></td>
+                <td th:text="${cond.winRate2}" width="20%"></td>
+                <td th:text="${cond.winRate3}" width="20%"></td>
+                <td th:text="${cond.winRate4}" width="20%"></td>
+                <td width="20%"></td>
+            </tr>
+            </tbody>
+        </table>
+
+<!--
+        <div class="row">
+            <div th:if="${cond.winRate1}" class="col">
+                <p th:text="${cond.winRate1}"></p>
+            </div>
+            <div th:if="${cond.winRate2}" class="col">
+                <p th:text="${cond.winRate2}"></p>
+            </div>
+            <div th:if="${cond.winRate3}" class="col">
+                <p th:text="${cond.winRate3}"></p>
+            </div>
+            <div th:if="${cond.winRate4}" class="col">
+                <p th:text="${cond.winRate4}"></p>
+            </div>
+            <div th:if="${cond.winRate5}" class="col">
+                <p th:text="${cond.winRate5}"></p>
+            </div>
+        </div>
+-->
+        <p style=“text-align: right;>* 같은 줄에 상대팀과 우리팀을 입력하면 승률이 표시됩니다.</p>
         <hr class="my-2">
         <div class="row">
             <div class="col">

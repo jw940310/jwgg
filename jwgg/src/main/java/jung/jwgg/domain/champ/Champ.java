@@ -7,6 +7,8 @@ public class Champ {
     private Integer champId;
     private String champName;
     private String champLine;
+    private String champEngName;
+    private String champEngLine;
 
     public Champ() {
 

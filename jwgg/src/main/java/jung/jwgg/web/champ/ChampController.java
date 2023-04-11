@@ -10,7 +10,6 @@ import jung.jwgg.web.SessionConst;
 import jung.jwgg.web.champ.form.AddCounterDto;
 import jung.jwgg.web.champ.form.AddCounterForm;
 import jung.jwgg.web.champ.form.SearchCountDto;
-import jung.jwgg.web.item.form.ItemSaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -34,7 +33,7 @@ public class ChampController {
     private final ChampService champService;
 
     @GetMapping
-    public String champs(@ModelAttribute("cond") ChampRecoCond cond, Model model, HttpServletRequest request) {
+    public String champs(@ModelAttribute("cond") ChampRecoCond cond, Model model, HttpServletRequest request, BindingResult bindingResult) throws IOException {
 /*        for (String redName : cond.getRedNames()) {
             if (redName != null && !redName.isEmpty()) {
                 Champ findChamp = champService.findChamp(redName);
@@ -48,31 +47,56 @@ public class ChampController {
         Long id = member.getId();
         cond.setLoginId(id);
 
-        if (cond.getRedChampName1() != null && !cond.getRedChampName1().isEmpty()) {
-            Champ findedChamp = champService.findChamp(cond.getRedChampName1());
-            cond.setRedChampId1(findedChamp.getChampId());
+        checkWord(cond, bindingResult, cond.getRedChampName1());
+        checkWord(cond, bindingResult, cond.getRedChampName2());
+        checkWord(cond, bindingResult, cond.getRedChampName3());
+        checkWord(cond, bindingResult, cond.getRedChampName4());
+        checkWord(cond, bindingResult, cond.getRedChampName5());
+        // 적 챔피언 검사
+        checkWord(cond, bindingResult, cond.getBlueChampName1());
+        checkWord(cond, bindingResult, cond.getBlueChampName2());
+        checkWord(cond, bindingResult, cond.getBlueChampName3());
+        checkWord(cond, bindingResult, cond.getBlueChampName4());
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "champs/champs";
         }
-        if (cond.getRedChampName2() != null && !cond.getRedChampName2().isEmpty()) {
-            Champ findedChamp = champService.findChamp(cond.getRedChampName2());
-            cond.setRedChampId2(findedChamp.getChampId());
-        }
-        if (cond.getRedChampName3() != null && !cond.getRedChampName3().isEmpty()) {
-            Champ findedChamp = champService.findChamp(cond.getRedChampName3());
-            cond.setRedChampId3(findedChamp.getChampId());
-        }
-        if (cond.getRedChampName4() != null && !cond.getRedChampName4().isEmpty()) {
-            Champ findedChamp = champService.findChamp(cond.getRedChampName4());
-            cond.setRedChampId4(findedChamp.getChampId());
-        }
-        if (cond.getRedChampName5() != null && !cond.getRedChampName5().isEmpty()) {
-            Champ findedChamp = champService.findChamp(cond.getRedChampName5());
-            cond.setRedChampId5(findedChamp.getChampId());
-        }
+
+        cond.setWinRate1(checkWinRate(cond, cond.getRedChampName1(), cond.getBlueChampName1()));
+        cond.setWinRate2(checkWinRate(cond, cond.getRedChampName2(), cond.getBlueChampName2()));
+        cond.setWinRate3(checkWinRate(cond, cond.getRedChampName3(), cond.getBlueChampName3()));
+        cond.setWinRate4(checkWinRate(cond, cond.getRedChampName4(), cond.getBlueChampName4()));
 
         log.info("{}",cond);
         List<Champ> champs = champService.recommendChamp(cond);
         model.addAttribute("champs", champs);
         return "champs/champs";
+    }
+
+    private String checkWinRate(@ModelAttribute("cond") ChampRecoCond cond, String redChampName, String blueChampName) throws IOException {
+        if (redChampName != null && !redChampName.isEmpty() && blueChampName != null && !blueChampName.isEmpty()) {
+            if (champService.findChamp(redChampName) != null && champService.findChamp(blueChampName) != null) {
+                if (champService.findChamp(redChampName).getChampLine().equals(champService.findChamp(blueChampName).getChampLine())) {
+                    String champEngName1 = champService.findChamp(redChampName).getChampEngName();
+                    String champEngName2 = champService.findChamp(blueChampName).getChampEngName();
+                    String champEngLine = champService.findChamp(redChampName).getChampEngLine();
+                    return champService.scrapeHeadToHeadWinRate(champEngName1, champEngName2, champEngLine);
+                }
+            }
+        }
+        return null;
+    }
+
+    private void checkWord(@ModelAttribute("cond") ChampRecoCond cond, BindingResult bindingResult, String redChampName) {
+        if (redChampName != null && !redChampName.isEmpty()) {
+            if (champService.findChamp(redChampName) == null) {
+                bindingResult.reject("noSuchChamp");
+            } else {
+                Champ findedChamp = champService.findChamp(redChampName);
+                cond.setRedChampId1(findedChamp.getChampId());
+            }
+        }
     }
 
     @GetMapping("/add")

@@ -33,6 +33,12 @@ public class ChampRecoCond {
 
     private String champLine;
 
+    private String winRate1;
+    private String winRate2;
+    private String winRate3;
+    private String winRate4;
+    private String winRate5;
+
     public List<String> getRedNames() {
         List<String> redNames = new ArrayList<String>();
         redNames.add(this.redChampName1);
