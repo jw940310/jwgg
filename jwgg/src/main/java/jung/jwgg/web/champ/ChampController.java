@@ -81,7 +81,7 @@ public class ChampController {
                     String champEngName1 = champService.findChamp(redChampName).getChampEngName();
                     String champEngName2 = champService.findChamp(blueChampName).getChampEngName();
                     String champEngLine = champService.findChamp(redChampName).getChampEngLine();
-                    return champService.scrapeHeadToHeadWinRate(champEngName1, champEngName2, champEngLine);
+                    return champService.scrapeHeadToHeadWinRate(champEngName2, champEngName1, champEngLine);
                 }
             }
         }
