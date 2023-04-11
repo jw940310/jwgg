@@ -23,7 +23,7 @@ class ChampRepositoryTest {
 
     @Test
     void test() throws IOException {
-        champService.scrapeHeadToHeadWinRate("vayne", "kaisa");
+        champService.scrapeHeadToHeadWinRate("vayne", "kaisa","bottom");
     }
 /*
     @Test

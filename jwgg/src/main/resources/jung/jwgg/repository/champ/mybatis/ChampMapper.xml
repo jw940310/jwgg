@@ -79,7 +79,7 @@
 -->
 
     <select id="findChamp" resultType="Champ">
-        SELECT champ_id, champ_name,champ_line
+        SELECT champ_id, champ_name,champ_line,champ_eng_name,champ_eng_line
         FROM CHAMP
         where champ_name=#{champName}
     </select>

@@ -11,14 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 @Service
@@ -62,28 +55,14 @@ public class ChampServiceV1 implements ChampService{
     }
 
     @Override
-    public String scrapeHeadToHeadWinRate(String championName1, String championName2) throws IOException {
-        String url = "https://lolalytics.com/lol/" + championName1 + "/vs/" + championName2 + "/build/";
+    public String scrapeHeadToHeadWinRate(String championName1, String championName2, String championLine) throws IOException {
+        String url = "https://fow.kr/stats/" + championName1 + "/"+championLine+"/13.7/" + championName2;
+
         Document doc = Jsoup.connect(url).get();
-        String winRate = doc.select(".ChampionVsStats_stats__7sEQ- div div[1]").text();
+        String myString = doc.select(".position_selected").text();
+        int lastSpace = myString.lastIndexOf(" "); // 마지막 공백의 인덱스를 찾음
+        String winRate = myString.substring(lastSpace+1);
         System.out.println("winRate = " + winRate);
         return winRate;
     }
-/*
-    @Override
-    public void scrapeHeadToHeadWinRate(String championName1, String championName2) {
-        String url = "https://lolalytics.com/lol/" + championName1 + "/vs/" + championName2 + "/build/";
-        try {
-            URLConnection connection = new URL(url).openConnection();
-            InputStream inputStream = connection.getInputStream();
-            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
-            XPath xpath = XPathFactory.newInstance().newXPath();
-            String expression = "/html/body/div/div[4]/div[1]/div[2]/div[1]/div[2]/div[1]/div/text()[1]"; // XPath 표현식
-            String text = (String) xpath.evaluate(expression, doc, XPathConstants.STRING);
-            System.out.println(text);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-*/
 }
